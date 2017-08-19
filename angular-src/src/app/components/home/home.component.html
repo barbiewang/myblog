@@ -3,10 +3,11 @@
         <h1 class="display-3"><img src="../../../../heart.png" alt="love">欢迎来到我的博客</h1>
         <h3>————一个女程序猿的学习记录</h3>
         <p>该博客主要记录了博主的前端学习心得，并转载相关优秀文章。</p>
-        <a class="btn btn-primary" [routerLink]="['/register']">注册</a>
-        <a class="btn btn-primary" [routerLink]="['/login']">登录</a> 
+        <span *ngIf="!authService.loggedIn()"><a class="btn btn-primary" [routerLink]="['/register']">注册</a></span>
+        <span *ngIf="!authService.loggedIn()"><a class="btn btn-default" [routerLink]="['/login']">登录</a></span>
+        <span *ngIf="authService.loggedIn()"><a class="btn btn-primary" href="#" (click)="navbar.onLogOutClick()">退出登录</a></span>
       </div>
       <div class="container">
-      <a class="visitor" [routerLink]="['/dashboard']">游客进入&raquo;</a>
+      <p *ngIf="!authService.loggedIn()"><a class="visitor" [routerLink]="['/dashboard']">游客进入&raquo;</a></p>
       </div>
     </div>

@@ -13,19 +13,23 @@ router.post('/register',(req,res,next)=>{
          username:req.body.username,
          password:req.body.password
      });
-    User.addUser(newUser,(err,user)=>{
-        if(err){
-            res.json({success:false,msg:'fail to register'});
-            console.error(err);
+     User.getUserByUsername(newUser.username,(err,user)=>{
+        if(err) throw err;
+        if(user){
+            return res.json({success:false,msg:'用户名已存在，请尝试新的用户名'});
         }else{
-            res.json({success:true,msg:'success to register'});
-            console.log(user);
+            User.addUser(newUser,(err,user)=>{
+                if(err){
+                    res.json({success:false,msg:'fail to register'});
+                    console.error(err);
+                }else{
+                    res.json({success:true,msg:'success to register'});
+                    console.log(user);
+                }
+            });
         }
     });
-    //next();
-
-});
-
+})
 //authenticate
 router.post('/authenticate',(req,res,next)=>{
     const username = req.body.username;
@@ -33,7 +37,7 @@ router.post('/authenticate',(req,res,next)=>{
     User.getUserByUsername(username,(err,user)=>{
         if(err) throw err;
         if(!user){
-            return res.json({success:false,msg:'user not found'});
+            return res.json({success:false,msg:'用户名不存在'});
         }
         User.comparePassword(password,user.password,(err,isMatch)=>{
             if(err) throw err;
@@ -53,7 +57,7 @@ router.post('/authenticate',(req,res,next)=>{
                     }
                 })
             }else{
-                return res.json({success:false,msg:'wrong password'})
+                return res.json({success:false,msg:'密码错误'})
             }
 
     })
@@ -68,4 +72,45 @@ router.get('/profile',passport.authenticate('jwt',{session:false}),(req,res,next
      })
 })
 
+router.post('/update',(req,res,next)=>{
+            User.updateUser(req.body._id, req.body.name, req.body.email, (error, result) => {
+                if (error) {
+                    console.error("update user error");
+                    return res.json({success: false, msg:"update to databse failed!"});
+                } else {
+                    console.info("update success: " + result);
+                    return res.json({success: true, user: result});
+                }
+            });
+
+});
+ router.post('/password',(req,res,next)=>{
+     User.updatePassword(req.body._id, req.body.password, (error, result) => {
+         if (error) {
+             console.error("update password error");
+            return res.json({success: false, msg:"update to databse failed!"});
+         } else {
+             User.getUserByUsername(req.body.username,(err,user)=>{
+                 const token = jwt.sign(user,config.secret,{
+                    expiresIn:604800
+                });
+                res.json({
+                    success:true,
+                    token:'JWT '+token,
+                    user:{
+                        id:user._id,
+                        name:user.name, 
+                        username:user.username,
+                        email:user.email,
+                        password:user.password
+                    }
+                })
+             })
+             
+            }
+    });
+
+});
+
+  
 module.exports = router;

@@ -41,6 +41,9 @@ app.use(express.static(path.join(__dirname,'public')));
 app.get('/',(req,res)=>{
    res.send('invaid endpoint')
 })
+app.get('*',(req,res)=>{
+   res.sendFile(path.join(__dirname,'publice/index.html'));
+})
 
 //passport middleware
 app.use(passport.initialize());

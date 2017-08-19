@@ -1,3 +1,35 @@
-<p>
-  profile works!
-</p>
+ <div *ngIf="user">
+  <h1 class="page-header">{{user.name}}</h1>
+  <ul class="list-group">
+    <li class="list-group-item">用户名:{{user.username}}</li>
+    <li class="list-group-item">邮箱:{{user.email}}</li>
+  </ul>
+  <button class='btn btn-primary btn-sm' (click)="editUser()">修改信息</button>
+  <button class='btn btn-default btn-sm' (click)="editPassword()">修改密码</button>
+  <form *ngIf = "isEdit" (submit) = "onChangeSubmit()">
+  <div class="form-group">
+    <label>姓名</label>
+    <input type="text" [(ngModel)]= "user.name" name="name" class="form-control" placeholder="name">
+  </div>
+  
+  <div class="form-group">
+    <label>邮箱</label>
+    <input type="text" [(ngModel)]= "user.email" name="email" class="form-control" placeholder="email">
+  </div>
+  
+  <input type="submit" class="btn btn-primary" value="提交">
+</form>
+<form *ngIf = "isEditPassword" (submit) = "onChangePassword()">
+  <div class="form-group">
+    <label>密码</label>
+    <input [(ngModel)]= "user.password" type="password" name="password" class="form-control" id="password1">
+  </div>
+  <div class="form-group">
+    <label for="password">确认密码</label>
+    <input type="password" name="password" class="form-control" placeholder="password" id="password2">
+  </div>
+  <input type="submit" class="btn btn-primary" value="提交">
+</form>
+
+</div> 
+
