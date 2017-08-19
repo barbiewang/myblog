@@ -53,6 +53,23 @@ export class RegisterComponent implements OnInit {
     
     })
   }
+  validateUsername(){
+     const user = {
+      name:this.name,
+      username:this.username,
+      email:this.email,
+      password:this.password
+    }
+    this.authService.validateUsername(user).subscribe(data=>{
+       let usernameSmall = document.getElementById("usernameSmall");
+      if (data.success) {
+        usernameSmall.innerText = data.msg;
+      } else {
+        usernameSmall.innerText = data.msg;
+      }
+    
 
+    })
+  }
   
 }

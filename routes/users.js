@@ -30,6 +30,16 @@ router.post('/register',(req,res,next)=>{
         }
     });
 })
+router.post('/validate-username',(req,res,next)=>{
+     User.getUserByUsername(req.body.username,(err,user)=>{
+        if(err) throw err;
+        if(user){
+            return res.json({success:false,msg:'用户名已存在，请尝试新的用户名'});
+        }else {
+            res.json({success:true,msg:"用户名可用"})
+        }
+    })
+})
 //authenticate
 router.post('/authenticate',(req,res,next)=>{
     const username = req.body.username;

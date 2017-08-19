@@ -17,6 +17,13 @@ export class AuthService {
     return this.http.post("http://localhost:3000/users/register",user,{headers:headers})
           .map(res=>res.json());
   }
+  validateUsername(user){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.post("http://localhost:3000/users/validate-username",{username:user.username},{headers:headers})
+          .map(res=>res.json());
+  }
+  
   updateUser(user){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
