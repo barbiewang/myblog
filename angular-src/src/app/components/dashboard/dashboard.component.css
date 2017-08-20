@@ -1,0 +1,29 @@
+.nav-tabs>li>a:hover{
+    font-size:1.5em;
+}
+.nav-tabs>li>a{
+    font-size:1.2em;
+}
+.list-item>a:hover{
+    color:darkslategray;
+    background-color: transparent;
+    font-size:1.2em;  
+}
+.list-item{
+    margin:1em 0;
+    font-size:1.2em;
+}
+.btn-outline-primary{
+    color: #007bff;
+    background-color: transparent;
+    background-image: none;
+    border-color: #007bff;
+
+    border: 1px solid transparent; 
+    text-align: center;
+}
+.btn-outline-primary:hover{
+    background-color: #007bff;
+    color:white;
+    transition: all .15s ease-in-out;
+}

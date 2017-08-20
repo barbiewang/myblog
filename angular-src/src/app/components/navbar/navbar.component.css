@@ -1,6 +1,14 @@
-.navbar {
-   /* background-color:pink; */
-}
+/* .navbar {
+    background-color:#111; 
+    color:white
+} */
 .display-3{
     font-family: Times New Roman;
+}
+.navbar-brand{
+    color:slateblue;
+}
+.navbar-default .navbar-nav>li>a:hover{
+   color:#2196f3;
+   font-size:1.5em;
 }

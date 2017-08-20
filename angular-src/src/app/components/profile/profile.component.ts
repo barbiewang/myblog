@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
     });
   }
   onChangePassword() { 
-    let password1 = (<HTMLInputElement>document.getElementById("password1")).value;
+    let password1 = (<HTMLInputElement> document.getElementById("password1") ).value;
     let password2 = (<HTMLInputElement>document.getElementById("password2")).value;
     console.log(password1,password2);
     if(password1 !== null &&  password1 !== undefined &&  password1 === password2) {
@@ -66,5 +66,9 @@ export class ProfileComponent implements OnInit {
 
     }
     
+  }
+  closeModify(){
+    this.isEdit = false;
+    this.isEditPassword = false;
   }
 }

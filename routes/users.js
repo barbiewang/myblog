@@ -3,7 +3,8 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const config = require('../config/database')
+const config = require('../config/database');
+const Comment = require('../models/comment');
 
 //register
 router.post('/register',(req,res,next)=>{
@@ -77,7 +78,7 @@ router.post('/authenticate',(req,res,next)=>{
 
 //profile
 router.get('/profile',passport.authenticate('jwt',{session:false}),(req,res,next)=>{
-     res.json({
+    res.json({
          user:req.user
      })
 })
@@ -121,6 +122,22 @@ router.post('/update',(req,res,next)=>{
     });
 
 });
+router.post('/comment',(req,res,next)=>{
+    let newComment = new Comment({
+        text : req.body.text,
+        username:req.body.username,
+        time:(new Date()).toLocaleDateString()
+    });
+    Comment.addComment(newComment,(err,result)=>{
+        if (err) {
+            res.json({success:false,msg:'fail to comment'});
+            console.error(err);
+        } else {
+            res.json({success:true,msg:'success to comment'});
+            console.log(result);
+        }
+    })
+})
 
   
 module.exports = router;

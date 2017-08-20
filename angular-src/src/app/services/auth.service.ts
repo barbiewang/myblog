@@ -7,6 +7,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 export class AuthService {
   authToken:any;
   user:any;
+  comment:any;
 
   constructor(private http:Http
             
@@ -48,6 +49,12 @@ export class AuthService {
     headers.append("Authorization",this.authToken);
     headers.append("Content-Type","application/json");
     return this.http.get("http://localhost:3000/users/profile",{headers:headers})
+          .map(res=>res.json());
+  }
+  leaveComment(comment){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.post("http://localhost:3000/users/comment",comment,{headers:headers})
           .map(res=>res.json());
   }
   storeUserData(token,user){
