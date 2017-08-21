@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   
   IfLogged(){
     if(this.authService.loggedIn()){
-      this.isLogged = true;
+      this.isLogged = !this.isLogged;
     }else{
       this.isLogged = false;
       this.flashMessage.show("请登录后留言",{cssClass:'alert-danger',timeout:3000});
@@ -46,8 +46,11 @@ export class DashboardComponent implements OnInit {
       console.log(comment);
     this.authService.leaveComment(comment).subscribe(data=>{
       if (data.success){
-        this.flashMessage.show("谢谢评论",{timeout:3000,cssClass:'alert-success'});
-         this.router.navigate(['/dashboard']);
+        this.flashMessage.show("谢谢留言",{timeout:3000,cssClass:'alert-success'});
+        this.router.navigate(['/dashboard']);
+        this.isLogged = false;
+        
+
       } else {
           this.flashMessage.show("评论失败，请重试",{timeout:3000,cssClass:'alert-danger'});
       }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('../config/database');
-const bcrypt = require('bcryptjs');
+
 
 const CommentSchema = mongoose.Schema({
     text:{
@@ -24,6 +24,6 @@ module.exports.addComment = function(comment,callback){
 }
 
 module.exports.getCommentByUsername = function(username,callback){
-    console.log("here i am");
-    Comment.find({username : username}, callback);
+    const query = {username:username}
+    Comment.findOne(query,callback);
 };

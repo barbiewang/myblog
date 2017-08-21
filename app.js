@@ -9,6 +9,7 @@ const app = express();
 const port = 3000;
 const config = require('./config/database');
 const users = require('./routes/users');
+const blogs = require('./routes/blogs');
 
 //start server
 app.listen(port,()=>{
@@ -32,7 +33,8 @@ mongoose.connection.on('error',(err)=>{
 
 //use router
 
-app.use('/users',users)
+app.use('/users',users);
+app.use('/blogs',blogs)
 
 //set static folder
 app.use(express.static(path.join(__dirname,'public')));
