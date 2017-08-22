@@ -28,7 +28,7 @@ const appRoutes:Routes = [
   {path:"dashboard",component:DashboardComponent},
   {path:"profile",component:ProfileComponent,canActivate:[AuthGuard]},
   {path:"post",component:PostComponent,canActivate:[AuthGuard2]},
-  {path:"blog/:id",component:BlogComponent}
+  {path:"blog",component:BlogComponent}
 ]
 @NgModule({
   declarations: [
