@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule,Routes } from '@angular/router';
 import {AuthGuard} from './guards/auth.guard';
+import {AuthGuard2} from './guards/auth2.guard';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -17,6 +18,7 @@ import { PostComponent } from './components/post/post.component';
 import {ValidateService} from './services/validate.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import {AuthService} from './services/auth.service';
+import { BlogComponent } from './components/blog/blog.component';
 
 
 const appRoutes:Routes = [
@@ -25,7 +27,8 @@ const appRoutes:Routes = [
   {path:"login",component:LoginComponent},
   {path:"dashboard",component:DashboardComponent},
   {path:"profile",component:ProfileComponent,canActivate:[AuthGuard]},
-  {path:"post",component:PostComponent,canActivate:[AuthGuard]}
+  {path:"post",component:PostComponent,canActivate:[AuthGuard2]},
+  {path:"blog/:id",component:BlogComponent}
 ]
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ const appRoutes:Routes = [
     HomeComponent,
     DashboardComponent,
     ProfileComponent,
-    PostComponent
+    PostComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,7 @@ const appRoutes:Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService,AuthService,AuthGuard],
+  providers: [ValidateService,AuthService,AuthGuard,AuthGuard2],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

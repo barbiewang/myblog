@@ -1,20 +1,30 @@
  <ul class="nav nav-tabs">
-  <li class="active"><a href="#share" data-toggle="tab" aria-expanded="false">分享</a></li>
-  <li><a  href="#origin" data-toggle="tab" aria-expanded="true">原创</a></li>
+  <li class="active"><a (click)="onReqShareBlogs()" href="#share" data-toggle="tab" aria-expanded="false">分享</a></li>
+  <li><a (click)="onReqOriginBlogs()" href="#origin" data-toggle="tab" aria-expanded="true">原创</a></li>
 </ul>
+
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade active in" id="share">
-    <ol class="list-group">
-      <li class="list-item"><a href="">share</a></li>
+    <ol class="list-group" >
+      <li class="list-item" *ngFor="let shareblog of shareblogs">
+        <a target ="blank"  href={{shareblog.content}}>{{shareblog.headline}}</a>
+        <span>&nbsp;&nbsp;&nbsp;{{shareblog.author}}</span>
+        <span>&nbsp;&nbsp;&nbsp;--{{shareblog.time}}</span>
+      </li>
     </ol>
   </div>
   <div class="tab-pane fade" id="origin">
-     <ol class="list-group">
-      <li class="list-item"><a href="">origin</a></li>
+     <ol class="list-group" >
+      <li class="list-item" *ngFor="let originblog of originblogs">
+        <a (click)="postBlogId()" [routerLink]='["/blog",originblog._id]'>{{originblog.headline}}</a>
+        <span>&nbsp;&nbsp;&nbsp;--{{originblog.time}}</span>
+      </li>
     </ol>
   </div>
 </div>
+
 <button (click)="IfLogged()" class="btn btn-outline-primary">留言</button>
+
 <form *ngIf = "isLogged" class="form-horizontal">
   <fieldset>
     <div class="form-group">

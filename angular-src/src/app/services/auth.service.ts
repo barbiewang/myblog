@@ -9,9 +9,7 @@ export class AuthService {
   user:any;
   comment:any;
 
-  constructor(private http:Http
-            
-  ) { }
+  constructor(private http:Http) { }
   registerUser(user){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
@@ -57,6 +55,12 @@ export class AuthService {
     return this.http.post("http://localhost:3000/users/comment",comment,{headers:headers})
           .map(res=>res.json());
   }
+  postBlog(blog){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.post("http://localhost:3000/blogs/post-blog",blog,{headers:headers})
+          .map(res=>res.json());
+  }
   storeUserData(token,user){
     localStorage.setItem('id_token',token);
     localStorage.setItem('user',JSON.stringify(user));
@@ -71,11 +75,39 @@ export class AuthService {
     var logged  = tokenNotExpired('id_token');
     return logged;
   }
+  adminLoggedIn(){
+    var logged  = tokenNotExpired('id_token');
+    if (logged) {
+      var userString = localStorage.getItem("user");
+      var user = JSON.parse(userString);
+      if (user.username === "jane"){
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return logged;
+    }
+  }
   logout(){
     this.authToken = null;
     this.user = null;
     localStorage.clear();
   }
+  getOriginBlogs(){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.get("http://localhost:3000/blogs/blog-author?author=Jane",{headers:headers})
+          .map(res=>res.json());
+  }
+  getShareBlogs(){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.get("http://localhost:3000/blogs/blog-author-notjane?author=Jane",{headers:headers})
+          .map(res=>res.json());
+  }
+ 
+  
  
   
 }

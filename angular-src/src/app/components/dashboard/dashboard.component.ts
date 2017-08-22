@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import { ValidateService } from '../../services/validate.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { BlogComponent } from '../blog/blog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,10 @@ export class DashboardComponent implements OnInit {
   text:String;
   time:String;
   username:String;
- isLogged:boolean = false;
+  isLogged:boolean = false;
+  shareblogs:Object;
+  originblogs:Array<Object>;
+  blogId:String;
 
   constructor(private authService:AuthService,
               private flashMessage:FlashMessagesService,
@@ -22,6 +26,26 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  this.authService.getShareBlogs().subscribe(data=>{
+            this.shareblogs = data.blogs;
+  },
+    err=>{
+      console.log(err);
+      return false;
+    }
+  )
+  }
+  onReqShareBlogs(){
+    this.authService.getShareBlogs().subscribe(data=>{
+      this.shareblogs = data.blogs;
+    })
+  }
+  onReqOriginBlogs() {
+    this.authService.getOriginBlogs().subscribe(data => {
+      this.originblogs = data.blogs;
+      console.log(data.blogs);
+      
+    })
   }
   
   IfLogged(){
@@ -57,4 +81,6 @@ export class DashboardComponent implements OnInit {
     
   })
   }
+
+
 }

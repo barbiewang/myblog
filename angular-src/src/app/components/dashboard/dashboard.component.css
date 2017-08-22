@@ -27,3 +27,6 @@
     color:white;
     transition: all .15s ease-in-out;
 }
+.list-item{
+    font-size:1.1em;
+}

@@ -16,7 +16,8 @@ const BlogSchema = mongoose.Schema({
     },
     time:{
         type:Date,
-        require:true
+        require:true,
+        default:(new Date()).toLocaleString()
     }
 })
 
@@ -26,6 +27,14 @@ module.exports.addBlog = function(blog,callback){
     blog.save(callback);
 }
 
-module.exports.getBlogById= function(id,callback){
-    Blog.findById(id, callback);
+module.exports.getBlogByAuthor= function(author,callback){
+    const query = {author:author};
+    Blog.find(query,callback);
 };
+module.exports.getBlogByOtherAuthor= function(author,callback){
+    const query = {author:{$ne:author}};
+    Blog.find(query,callback);
+};
+module.exports.getBlogById = function(id,callback){
+    Blog.findById(id,callback);
+}

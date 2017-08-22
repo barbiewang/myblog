@@ -4,6 +4,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const path = require("path");
+// const showdown = require('showdown');
+// const converter = showdown.Converter();
 
 const app = express();
 const port = 3000;
@@ -43,6 +45,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.get('/',(req,res)=>{
    res.send('invaid endpoint')
 })
+
 app.get('*',(req,res)=>{
    res.sendFile(path.join(__dirname,'publice/index.html'));
 })
