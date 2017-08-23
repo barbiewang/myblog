@@ -12,10 +12,11 @@ const BlogSchema = mongoose.Schema({
     },
     author:{
         type:String,
-        required:true
+        required:true,
+        default:"Jane",
     },
     time:{
-        type:Date,
+        type:String,
         require:true,
         default:(new Date()).toLocaleString()
     }

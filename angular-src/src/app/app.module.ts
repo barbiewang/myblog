@@ -18,6 +18,7 @@ import { PostComponent } from './components/post/post.component';
 import {ValidateService} from './services/validate.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import {AuthService} from './services/auth.service';
+import {AboutblogService} from './services/aboutblog.service';
 import { BlogComponent } from './components/blog/blog.component';
 
 
@@ -28,7 +29,7 @@ const appRoutes:Routes = [
   {path:"dashboard",component:DashboardComponent},
   {path:"profile",component:ProfileComponent,canActivate:[AuthGuard]},
   {path:"post",component:PostComponent,canActivate:[AuthGuard2]},
-  {path:"blog",component:BlogComponent}
+  {path:"blog/:id",component:BlogComponent}
 ]
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ const appRoutes:Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService,AuthService,AuthGuard,AuthGuard2],
+  providers: [ValidateService,AuthService,AboutblogService,AuthGuard,AuthGuard2],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

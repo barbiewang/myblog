@@ -40,11 +40,33 @@ router.get('/blog-author-notjane',(req,res,next)=>{
     
 })
 
-// router.get('/blog/:id',(req,res,next)=>{
-//     console.log(req.body);
-//     let author = req.query.author;
-//     Blog.getBlogByAuthor(author, (error, result )=> {
-//         res.json({blogs: result});
-//     })
-// })
+router.get('/blog/:id',(req,res,next)=>{  
+    let id = req.params.id;
+    console.log(123,id);
+    Blog.getBlogById(id, (error, result )=> {
+        res.json({blog: result});
+    })
+})
+router.delete('/blog-delete/:id',(req,res,next)=>{
+    let id = req.params.id;
+    Blog.remove({_id:id},(err,result)=>{
+        res.json({blog:result});
+    });
+})
+router.get('/blog-edit/:id',(req,res,next)=>{
+    let id = req.params.id;
+    Blog.getBlogById(id,(err,result)=>{
+        res.json({blog:result});
+    })
+})
+router.post('/blog-update/:id',(req,res,next)=>{
+    let id = req.params.id;
+    let blog = req.body;
+    console.log(id,blog);
+    Blog.update({_id:id},
+        {headline:blog.headline,author:blog.author,time:blog.time,content:blog.content},
+        (err,result)=>{
+        res.json({blog:result});
+    });
+})
 module.exports = router;

@@ -106,7 +106,12 @@ export class AuthService {
     return this.http.get("http://localhost:3000/blogs/blog-author-notjane?author=Jane",{headers:headers})
           .map(res=>res.json());
   }
- 
+  getIdBlog(id){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.get("http://localhost:3000/blogs/blog/"+id,{headers:headers})
+          .map(res=>res.json());
+  }
   
  
   

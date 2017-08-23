@@ -25,14 +25,12 @@ export class PostComponent implements OnInit {
   }
   
   onPostSubmit(){
-    console.log(123);
     const blog = {
       headline:this.headline,
       author:this.author,
       content:this.content
     }
     this.authService.postBlog(blog).subscribe(data=>{
-      console.log(123)
        if(data.success){
         this.flashMessage.show(data.msg,{timeout:3000,cssClass:'alert-success'});
         this.router.navigate(['/post']);

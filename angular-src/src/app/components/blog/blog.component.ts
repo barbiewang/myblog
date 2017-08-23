@@ -3,6 +3,8 @@ import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import { ValidateService } from '../../services/validate.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import {AboutblogService} from '../../services/aboutblog.service';
 
 
 @Component({
@@ -12,29 +14,26 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class BlogComponent implements OnInit {
   isLogged:boolean = false;
+  isclicked:boolean = false;
   text:String;
-  time:String;
-  username:String;
-  blogs:String;
-  content:String;
+  blog:String;
+  originblogs:Array<Object>;
 
   constructor(private authService:AuthService,
     private flashMessage:FlashMessagesService,
     private router:Router,
-    private validateService :ValidateService) { }
+    private validateService :ValidateService,
+    private aboutBlog:AboutblogService
+  ) { }
 
   ngOnInit() {
-    this.authService.getOriginBlogs().subscribe(data=>{
-      this.blogs = data.blogs;
-      let blog3 = this.blogs[2];
-      let content3 = blog3["content"];
-      let container =(<HTMLBodyElement> document.getElementById("container"));
-      container.innerHTML = content3;
-    });
-    err=>{
-      console.error(err);
-      return false;
-    }
+    let blogId = document.location.pathname.split("/").pop()
+    this.authService.getIdBlog(blogId).subscribe(data=>{
+      this.blog = data.blog;  
+      console.log(this.blog);
+      let container = (<HTMLBodyElement> document.getElementById("container"));
+      container.innerHTML+=this.blog["content"];
+    })
   }
 
   getDivId(){
@@ -52,6 +51,7 @@ export class BlogComponent implements OnInit {
       this.flashMessage.show("请登录后留言",{cssClass:'alert-danger',timeout:3000});
     }
   }
+  
   closeComment(){
     this.isLogged = false;
   }
@@ -76,6 +76,21 @@ export class BlogComponent implements OnInit {
       }
     
   })
+  }
+
+  editBlog(id){
+    this.aboutBlog.editBlog(id).subscribe(data=>{
+      this.blog = data.blog;
+      this.isclicked = !this.isclicked;
+
+    })
+  }
+  onUpdateSubmit(){
+    console.log(this.blog)
+    this.aboutBlog.updateBlog(this.blog).subscribe(data=>{
+      this.blog = data.blog;
+      console.log(this.blog);
+    })
   }
 
 }
