@@ -1,13 +1,57 @@
-<div class="jumbotron text-center">
-      <div class="container">
-        <h1 class="display-3"><img src="../../../../heart.png" alt="love">欢迎来到我的博客</h1>
-        <h3>————一个女程序猿的学习记录</h3>
-        <p>该博客主要记录了博主的前端学习心得，并转载相关优秀文章。</p>
-        <span *ngIf="!authService.loggedIn()"><a class="btn btn-primary" [routerLink]="['/register']">注册</a></span>
-        <span *ngIf="!authService.loggedIn()"><a class="btn btn-default" [routerLink]="['/login']">登录</a></span>
-        <span *ngIf="authService.loggedIn()"><a class="btn btn-primary" href="#" (click)="navbar.onLogOutClick()">退出登录</a></span>
-      </div>
-      <div class="container">
-      <p *ngIf="!authService.loggedIn()"><a class="visitor" [routerLink]="['/dashboard']">游客进入&raquo;</a></p>
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+<!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+ 
+  <div class=" carousel-inner"> 
+    <div class="container item active">
+      <img class="img-responsive center-block" src="./images/wall2.jpg" alt="welcome">
+      <div class="carousel-caption">
+         <img class="bounce" src="./images/heart1.png" alt="love">
+        <img class="bounce" src="./images/heart.png" alt="love">
+        <img class="bounce" src="./images/heart1.png" alt="love">
+        <h2 class="display-3">欢迎来到我的博客</h2>
+        <h4>————一个女程序猿的学习记录</h4>
+        <small>主要记录了博主的前端学习心得，并转载相关优秀文章。</small><br>
+        <span *ngIf="!authService.loggedIn()"><a class="btn btn-success btn-lg" [routerLink]="['/register']">注册</a></span>
+        <span *ngIf="!authService.loggedIn()"><a class="btn btn-default btn-lg" [routerLink]="['/login']">登录</a></span>
+        <span *ngIf="authService.loggedIn()"><a class="btn btn-primary btn-lg" href="#" (click)="onLogOutClick()">退出登录</a></span>
+        <p *ngIf="!authService.loggedIn()"><a class="visitor" [routerLink]="['/dashboard']"><em>游客进入&raquo;</em></a></p>
       </div>
     </div>
+    <div class="item">
+      <img class="img-responsive" src="./images/wall1.jpg" alt="me">
+      <div class="carousel-caption text-left">
+        <h3>Contact</h3>
+        <ul>
+          <li><img src="./images/email.png" alt="email">JaneWang17@yeah.net</li>
+          <li><a target="blank" href="https://github.com/barbiewang"><img src="./images/github.png" alt="github">Github</a></li>
+          <li><a  href="#" (click)="showQRcode()"><img  src="./images/wechat.png" alt="wechat">微信</a>
+              <img *ngIf="isclicked" id="QRcode" class="pull-center" src="./images/qrcode.jpg" alt="QRcode">
+          </li>        
+        </ul>   
+      </div>
+    </div>
+    <div class="item">
+        <img class="img-responsive" src="./images/life.jpg" alt="me">
+        <div class="carousel-caption text-left">
+          <h3>谢谢，我的家人！</h3>
+          <h3>谢谢，我的读者！</h3>
+          <p>&nbsp;&nbsp;网站将本着<strong><q>简洁而有内涵</q></strong>的宗旨为大家带来一片心灵的净土!</p>
+        </div>
+      </div>
+  </div>
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>

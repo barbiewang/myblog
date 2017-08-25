@@ -1,8 +1,88 @@
 .visitor{
     line-height:3;
     font-size:1em;
-    
+    color:white;  
+}
+.visitor:hover{
+    color:#8DF1F6;
 }
 .container{
     line-height: 2;
 }
+.carousel-caption{
+    /* bottom:5%; */
+    /* left:5%; */
+    color:#ED90A1;
+    font-size: 1.4em;
+}
+h4{
+    color:#26C1D2;
+    text-align:right;
+}
+h2{
+    color:#E41417
+}
+.carousel-inner .item>img{
+    height: 520px;
+    width:1200px;
+}
+.carousel-control.right{
+    background-image:linear-gradient(to right, rgba(0,0,0,0.0003) 0, rgba(0,0,0,0) 100%);
+}
+.carousel-control.left{
+    background-image:linear-gradient(to right, rgba(0,0,0,0.0003) 0, rgba(0,0,0,0) 100%);
+}
+.img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img{
+    max-width:none;
+}
+.text-left{
+    text-align: left;
+    color:white;
+    top:15%;
+    
+}
+.text-left>h3{
+    margin-bottom:5%;
+    font-family: STXingkai;
+    font-size:2em;
+
+}
+.text-left>p{
+    letter-spacing: 0.5em;
+    font-family: STKaiti;
+    font-size:1.5em;
+
+}
+.text-left>p>strong{
+    color:#09A8DD;
+
+}
+.text-left>ul li{
+    line-height:1.5em;
+    list-style: none;
+    font-size:1.5em;
+    margin-left:-80px;
+    font-size:1em;
+}
+.bounce{
+    transform-origin: center bottom;
+    animation: bounce 0.5s infinite alternate;
+    -webkit-animation: bounce 0.5s infinite alternate;
+}
+@keyframes bounce {
+    from {
+      transform: translateY(30px);
+    
+    }
+    to {
+      transform: translateY(-30px);
+    }
+  }
+  @-webkit-keyframes bounce {
+    from {
+      transform: translateY(30px);
+    }
+    to {
+      transform: translateY(-30px);
+    }
+  }

@@ -12,7 +12,8 @@ router.post('/post-blog',(req,res,next)=>{
         headline : req.body.headline,
         content:req.body.content,
         author:req.body.author,
-        time:(new Date()).toLocaleString()
+        time:req.body.time,
+        like:1
     });
     Blog.addBlog(newBlog,(err,blog)=>{
         if(err){
@@ -64,9 +65,23 @@ router.post('/blog-update/:id',(req,res,next)=>{
     let blog = req.body;
     console.log(id,blog);
     Blog.update({_id:id},
-        {headline:blog.headline,author:blog.author,time:blog.time,content:blog.content},
+        {headline:blog.headline,author:blog.author,time:blog.time,content:blog.content,like:blog.like},
         (err,result)=>{
         res.json({blog:result});
     });
+})
+router.post('/blog-addlike/:id',(req,res,next)=>{
+    let id = req.params.id;
+    Blog.addLike(id, (error, result )=> {
+        console.log(result);
+        res.json({blog: result})
+    })
+})
+router.post('/blog-cancellike/:id',(req,res,next)=>{
+    let id = req.params.id;
+    Blog.cancelLike(id, (error, result )=> {
+        console.log(result);
+        res.json({blog: result})
+    })
 })
 module.exports = router;

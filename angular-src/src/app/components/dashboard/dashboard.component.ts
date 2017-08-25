@@ -77,13 +77,11 @@ export class DashboardComponent implements OnInit {
     this.aboutBlog.editBlog(id).subscribe(result=>{
       this.blog = result.blog;
       this.isEdit = true;
-      console.log(result.blog);
     })
   }  
   onUpdateSubmit(){
     this.aboutBlog.updateBlog(this.blog).subscribe(result=>{
       this.blog = result.blog;
-      console.log(result);
     })
   }
   }

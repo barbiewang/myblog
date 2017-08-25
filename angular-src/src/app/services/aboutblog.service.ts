@@ -25,4 +25,16 @@ export class AboutblogService {
     return this.http.post("http://localhost:3000/blogs/blog-update/"+blog._id,blog,{headers:headers})
            .map(res=>res.json());
   }
+  addLike(blog){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.post("http://localhost:3000/blogs/blog-addlike/"+blog._id,blog,{headers:headers})
+           .map(res=>res.json());
+  }
+  cancelLike(blog){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.post("http://localhost:3000/blogs/blog-cancellike/"+blog._id,blog,{headers:headers})
+           .map(res=>res.json());
+  }
 }

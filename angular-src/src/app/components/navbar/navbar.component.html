@@ -15,7 +15,12 @@
       <ul class="nav navbar-nav navbar-left">
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink] = "['/']">首页</a></li>
       </ul>
-     
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input class="text-right" type="text" class="form-control" placeholder="搜索">
+        </div>
+        <img src="./images/search.png" alt="search">
+      </form>
       <ul class="nav navbar-nav navbar-right">
         <li [routerLinkActive]="['active']"><a [routerLink] = "['/dashboard']">文章</a></li>
         <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']"><a [routerLink] = "['/profile']">个人信息</a></li> 

@@ -1,4 +1,8 @@
 <div id="container"></div>
+<button (click)="addZan()" class="btn btn-success">
+  <span *ngIf="!isadded"><img src="./images/heart2.png" alt="空心">&nbsp;点赞{{blog.like}}</span>
+  <span *ngIf="isadded"><img src="./images/heart3.png" alt="空心">&nbsp;取消点赞{{blog.like}}</span>
+</button>
 <button (click)="IfLogged()" class="btn btn-primary">留言</button>
 <button (click)="goBackToList()" class="btn btn-info">返回文章列表</button>
 <button *ngIf = "authService.adminLoggedIn()" (click)="editBlog(blog._id)"  class="btn btn-success pull-left"><span class="glyphicon glyphicon-edit"></span></button>
@@ -14,6 +18,10 @@
         <label>时间</label>
         <input type="text" [(ngModel)]= "blog.time" name="time" class="form-control" placeholder="time">
       </div>
+      <div class="form-group">
+          <label>点赞</label>
+          <input type="number" [(ngModel)]= "blog.like" name="like" class="form-control" placeholder="like">
+        </div>
       <div class="form-group">
         <label for="textArea" class="col-lg-2 control-label">内容</label>
         <div class="col-lg-10">

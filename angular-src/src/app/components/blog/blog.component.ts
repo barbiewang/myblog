@@ -15,6 +15,7 @@ import {AboutblogService} from '../../services/aboutblog.service';
 export class BlogComponent implements OnInit {
   isLogged:boolean = false;
   isclicked:boolean = false;
+  isadded:boolean = false;
   text:String;
   blog:String;
   originblogs:Array<Object>;
@@ -30,7 +31,6 @@ export class BlogComponent implements OnInit {
     let blogId = document.location.pathname.split("/").pop()
     this.authService.getIdBlog(blogId).subscribe(data=>{
       this.blog = data.blog;  
-      console.log(this.blog);
       let container = (<HTMLBodyElement> document.getElementById("container"));
       container.innerHTML+=this.blog["content"];
     })
@@ -49,6 +49,7 @@ export class BlogComponent implements OnInit {
     }else{
       this.isLogged = false;
       this.flashMessage.show("请登录后留言",{cssClass:'alert-danger',timeout:3000});
+      alert("请登录后留言");
     }
   }
   
@@ -86,11 +87,23 @@ export class BlogComponent implements OnInit {
     })
   }
   onUpdateSubmit(){
-    console.log(this.blog)
     this.aboutBlog.updateBlog(this.blog).subscribe(data=>{
       this.blog = data.blog;
-      console.log(this.blog);
     })
+  }
+  addZan(){
+    this.isadded = !this.isadded;
+    if(!this.isadded){
+       this.aboutBlog.addLike(this.blog).subscribe(data=>{
+         this.blog = data.blog;
+       })
+    }
+    if(this.isadded){
+      this.aboutBlog.cancelLike(this.blog).subscribe(data=>{
+        this.blog = data.blog;
+      })
+    }
+
   }
 
 }
