@@ -95,7 +95,7 @@ router.post('/update',(req,res,next)=>{
             });
 
 });
- router.post('/password',(req,res,next)=>{
+router.post('/password',(req,res,next)=>{
      User.updatePassword(req.body._id, req.body.password, (error, result) => {
          if (error) {
              console.error("update password error");
@@ -122,22 +122,5 @@ router.post('/update',(req,res,next)=>{
     });
 
 });
-router.post('/comment',(req,res,next)=>{
-    let newComment = new Comment({
-        text : req.body.text,
-        username:req.body.username,
-        time:(new Date()).toLocaleDateString()
-    });
-    Comment.addComment(newComment,(err,result)=>{
-        if (err) {
-            res.json({success:false,msg:'fail to comment'});
-            console.error(err);
-        } else {
-            res.json({success:true,msg:'success to comment'});
-            console.log(result);
-        }
-    })
-})
 
-  
 module.exports = router;

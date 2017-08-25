@@ -1,41 +1,39 @@
 <div id="container"></div>
 <button (click)="Zan()" class="btn btn-success">
   <span *ngIf="!isadded"><img src="./images/heart2.png" alt="空心">&nbsp;点赞</span>
-  <span *ngIf="isadded"><img src="./images/heart3.png" alt="空心">&nbsp;取消点赞</span>
-  <span></span>
+  <span *ngIf="isadded"><img src="./images/heart3.png" alt="空心">&nbsp;取消</span>
+  <span id="like">&nbsp;</span>
 </button>
-
 <button (click)="IfLogged()" class="btn btn-primary">留言</button>
+<button (click)="Ifshare()" class="btn btn-default">分享</button>
 <button (click)="goBackToList()" class="btn btn-info">返回文章列表</button>
 <button *ngIf = "authService.adminLoggedIn()" (click)="editBlog(blog._id)"  class="btn btn-success pull-left"><span class="glyphicon glyphicon-edit"></span></button>
 <div *ngIf = "isclicked">
   <form *ngIf = "authService.adminLoggedIn()" (submit) = "onUpdateSubmit()">
-      <div class="form-group">
-        <label>标题</label>
-        <input type="text" [(ngModel)]= "blog.headline" name="headline" class="form-control" placeholder="headline">
+    <div class="form-group">
+      <label>标题</label>
+      <input type="text" [(ngModel)]= "blog.headline" name="headline" class="form-control" placeholder="headline">
+    </div>
+    <div class="form-group">
+      <label>作者</label>
+      <input type="text" [(ngModel)]= "blog.author" name="author" class="form-control" placeholder="author">
+      <label>时间</label>
+      <input type="text" [(ngModel)]= "blog.time" name="time" class="form-control" placeholder="time">
+    </div>
+    <div class="form-group">
+      <label>点赞</label>
+      <input type="number" [(ngModel)]= "blog.like" name="like" class="form-control" placeholder="like">
+    </div>
+    <div class="form-group">
+      <label for="textArea" class="col-lg-2 control-label">内容</label>
+      <div class="col-lg-10">
+        <textarea [(ngModel)]= "blog.content" name="content" class="form-control" rows="3" id="textArea" ></textarea>
       </div>
-      <div class="form-group">
-        <label>作者</label>
-        <input type="text" [(ngModel)]= "blog.author" name="author" class="form-control" placeholder="author">
-        <label>时间</label>
-        <input type="text" [(ngModel)]= "blog.time" name="time" class="form-control" placeholder="time">
-      </div>
-      <div class="form-group">
-          <label>点赞</label>
-          <input type="number" [(ngModel)]= "blog.like" name="like" class="form-control" placeholder="like">
-        </div>
-      <div class="form-group">
-        <label for="textArea" class="col-lg-2 control-label">内容</label>
-        <div class="col-lg-10">
-          <textarea [(ngModel)]= "blog.content" name="content" class="form-control" rows="3" id="textArea" ></textarea>
-        </div>
-      </div>
-      <input type="submit" class="btn btn-success" value="update">
-    </form>
-<div>
+    </div>
+    <input type="submit" class="btn btn-success" value="update">
+  </form>
+</div>
 <hr>
-
-
 <form *ngIf = "isLogged" class="form-horizontal">
   <fieldset>
     <div class="form-group">
@@ -52,3 +50,8 @@
     </div>
   </fieldset>
 </form>
+<ul *ngIf="comments" class="list-form">
+  <li class="list-form-item" *ngFor="let comment of comments">
+    <p>{{comment.username}}于{{comment.time}}写到：{{comment.text}}</p>
+  </li>
+</ul>

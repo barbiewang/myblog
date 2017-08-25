@@ -49,12 +49,6 @@ export class AuthService {
     return this.http.get("http://localhost:3000/users/profile",{headers:headers})
           .map(res=>res.json());
   }
-  leaveComment(comment){
-    let headers = new Headers();
-    headers.append("Content-Type","application/json");
-    return this.http.post("http://localhost:3000/users/comment",comment,{headers:headers})
-          .map(res=>res.json());
-  }
   postBlog(blog){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
@@ -110,6 +104,18 @@ export class AuthService {
     let headers = new Headers();
     headers.append("Content-Type","application/json");
     return this.http.get("http://localhost:3000/blogs/blog/"+id,{headers:headers})
+          .map(res=>res.json());
+  }
+  leaveComment(comment){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.post("http://localhost:3000/comments/comment",comment,{headers:headers})
+          .map(res=>res.json());
+  }
+  getCommentsByBlogId(id){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.get("http://localhost:3000/comments/comment/"+id,{headers:headers})
           .map(res=>res.json());
   }
   

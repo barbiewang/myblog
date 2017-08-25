@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 // const User = require('../models/user');
 const config = require('../config/database');
 // const Comment = require('../models/comment');
-const Blog = require('../models/blog')
+const Blog = require('../models/blog');
+const Comment = require('../models/comment');
 
 router.post('/post-blog',(req,res,next)=>{
     let newBlog = new Blog({
@@ -73,13 +74,16 @@ router.post('/blog-update/:id',(req,res,next)=>{
 router.post('/blog-addlike/:id',(req,res,next)=>{
     let id = req.params.id;
     Blog.addLike(id, (error, result )=> {
+        console.log("add", result);        
         res.json({blog: result})
     })
 })
 router.post('/blog-cancellike/:id',(req,res,next)=>{
     let id = req.params.id;
     Blog.cancelLike(id, (error, result )=> {
+        console.log("cancel", result);
         res.json({blog: result})
     })
 })
+
 module.exports = router;

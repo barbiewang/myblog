@@ -18,6 +18,7 @@ export class BlogComponent implements OnInit {
   isadded:boolean = false;
   text:String;
   blog:Object;
+  comments:Array<Object>;
 
   constructor(private authService:AuthService,
     private flashMessage:FlashMessagesService,
@@ -32,6 +33,10 @@ export class BlogComponent implements OnInit {
       this.blog = data.blog;  
       let container = (<HTMLBodyElement> document.getElementById("container"));
       container.innerHTML+=this.blog["content"];
+    })
+    this.authService.getCommentsByBlogId(blogId).subscribe(data=>{
+      this.comments = data.comments;
+     
     })
   }
 
@@ -51,26 +56,23 @@ export class BlogComponent implements OnInit {
       alert("请登录后留言");
     }
   }
-  
   closeComment(){
     this.isLogged = false;
   }
   onSubmitComment(){
     const userString = localStorage.getItem("user");
     let user=JSON.parse(userString);
-    let content = (<HTMLTextAreaElement> document.getElementById("textArea")).value
-     const comment = {
-       text:content,
-       username:user.username
-        }
-      console.log(comment);
+    let content = (<HTMLTextAreaElement> document.getElementById("textArea")).value;
+    const comment = {
+      text:content,
+      username:user.username,
+      blogid:this.blog["_id"],
+      time:(new Date()).toLocaleString
+    }
     this.authService.leaveComment(comment).subscribe(data=>{
       if (data.success){
         this.flashMessage.show("谢谢留言",{timeout:3000,cssClass:'alert-success'});
-        this.router.navigate(['/dashboard']);
         this.isLogged = false;
-        
-
       } else {
           this.flashMessage.show("评论失败，请重试",{timeout:3000,cssClass:'alert-danger'});
       }
@@ -92,18 +94,23 @@ export class BlogComponent implements OnInit {
   }
   Zan(){
     this.isadded = !this.isadded;
-    if(!this.isadded){
+    let like = (<HTMLBodyElement> document.getElementById("like"));
+    console.log("like", this.isadded);
+
+    if(this.isadded){
        this.aboutBlog.addLike(this.blog).subscribe(data=>{
          this.blog = data.blog;
-         console.log(this.blog["like"])
+         console.log("add" , this.blog["like"]);   
+         like.innerText=this.blog["like"];
        })
-    }
-    else{
+    } else {
       this.aboutBlog.cancelLike(this.blog).subscribe(data=>{
         this.blog = data.blog;
-        console.log(this.blog["like"])        
+        console.log("cancel", this.blog["like"]);
+        like.innerText=this.blog["like"];     
       })
     }
+    
 
   }
 

@@ -48,7 +48,7 @@ module.exports.addLike = function(id,callback){
     Blog.findOneAndUpdate(
         {"_id":id},
         {$inc:{"like":1}},
-        {returnNewDocument:true},
+        {new :true},
         callback
    )   
 }
@@ -56,7 +56,7 @@ module.exports.cancelLike = function(id,callback){
     Blog.findOneAndUpdate(
          {"_id":id},
          {$inc:{"like":-1}},
-         {returnNewDocument:true},
+         {new :true},
          callback
     )   
 }

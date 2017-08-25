@@ -12,8 +12,13 @@ const CommentSchema = mongoose.Schema({
         required:true
     },
     time:{
-        type:Date,
-        require:true
+        type:String,
+        require:true,
+        default:(new Date()).toLocaleString()
+    },
+    blogid:{
+        type:String,
+        required:true
     }
 })
 
@@ -23,7 +28,7 @@ module.exports.addComment = function(comment,callback){
     comment.save(callback);
 }
 
-module.exports.getCommentByUsername = function(username,callback){
-    const query = {username:username}
-    Comment.findOne(query,callback);
+module.exports.getCommentByBlogId = function(blogid,callback){
+    const query = {blogid:blogid};
+    Comment.find(query,callback);
 };
