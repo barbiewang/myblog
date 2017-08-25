@@ -18,7 +18,7 @@
   <div class="tab-pane fade" id="origin">
      <ol class="list-group" >
       <li class="list-item" *ngFor="let originblog of originblogs;let i = index">
-        <a [routerLink]="['/blog',originblog._id]" (click)="getBlogId(i)" >{{originblog.headline}}</a>
+        <a [routerLink]="['/blog',originblog._id]" >{{originblog.headline}}</a>
         <em>&nbsp;&nbsp;&nbsp;--{{originblog.time}}</em>
         <a *ngIf = "authService.adminLoggedIn()" (click)="deleteBlog(originblog._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
         <a *ngIf = "authService.adminLoggedIn()" (click)="editBlog(originblog._id)" class="pull-right"><span class="glyphicon glyphicon-edit"></span></a>

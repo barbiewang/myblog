@@ -17,8 +17,7 @@ export class BlogComponent implements OnInit {
   isclicked:boolean = false;
   isadded:boolean = false;
   text:String;
-  blog:String;
-  originblogs:Array<Object>;
+  blog:Object;
 
   constructor(private authService:AuthService,
     private flashMessage:FlashMessagesService,
@@ -91,16 +90,18 @@ export class BlogComponent implements OnInit {
       this.blog = data.blog;
     })
   }
-  addZan(){
+  Zan(){
     this.isadded = !this.isadded;
     if(!this.isadded){
        this.aboutBlog.addLike(this.blog).subscribe(data=>{
          this.blog = data.blog;
+         console.log(this.blog["like"])
        })
     }
-    if(this.isadded){
+    else{
       this.aboutBlog.cancelLike(this.blog).subscribe(data=>{
         this.blog = data.blog;
+        console.log(this.blog["like"])        
       })
     }
 

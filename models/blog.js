@@ -45,16 +45,18 @@ module.exports.getBlogById = function(id,callback){
     Blog.findById(id,callback);
 }
 module.exports.addLike = function(id,callback){
-    Blog.findAndModify({
-        query:{_id:id},
-        update:{$inc:{like:1}},
-        new:true
-    },callback)  
+    Blog.findOneAndUpdate(
+        {"_id":id},
+        {$inc:{"like":1}},
+        {returnNewDocument:true},
+        callback
+   )   
 }
 module.exports.cancelLike = function(id,callback){
-    Blog.findAndModify({
-        query:{_id:id},
-        update:{$inc:{like:-1}},
-        new:true
-    },callback)
+    Blog.findOneAndUpdate(
+         {"_id":id},
+         {$inc:{"like":-1}},
+         {returnNewDocument:true},
+         callback
+    )   
 }

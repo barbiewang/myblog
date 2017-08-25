@@ -1,8 +1,10 @@
 <div id="container"></div>
-<button (click)="addZan()" class="btn btn-success">
-  <span *ngIf="!isadded"><img src="./images/heart2.png" alt="空心">&nbsp;点赞{{blog.like}}</span>
-  <span *ngIf="isadded"><img src="./images/heart3.png" alt="空心">&nbsp;取消点赞{{blog.like}}</span>
+<button (click)="Zan()" class="btn btn-success">
+  <span *ngIf="!isadded"><img src="./images/heart2.png" alt="空心">&nbsp;点赞</span>
+  <span *ngIf="isadded"><img src="./images/heart3.png" alt="空心">&nbsp;取消点赞</span>
+  <span></span>
 </button>
+
 <button (click)="IfLogged()" class="btn btn-primary">留言</button>
 <button (click)="goBackToList()" class="btn btn-info">返回文章列表</button>
 <button *ngIf = "authService.adminLoggedIn()" (click)="editBlog(blog._id)"  class="btn btn-success pull-left"><span class="glyphicon glyphicon-edit"></span></button>

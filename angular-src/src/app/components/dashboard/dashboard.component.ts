@@ -47,20 +47,10 @@ export class DashboardComponent implements OnInit {
   }
   onReqOriginBlogs() {
     this.authService.getOriginBlogs().subscribe(data => {
-      this.originblogs = data.blogs;
-      console.log(data.blogs);
-      
+      this.originblogs = data.blogs;   
     })
   }
-  // getBlogId(item){
-  //   let originblog =  this.originblogs[item];
-  //   let id = originblog["_id"];
-  //   this.authService.getIdBlog(id).subscribe(data=>{
-  //     this.blog = data.blog;
-  //   })
-  //   console.info(id);
-  //   return false;
-  // }
+
   deleteBlog(id){
      this.aboutBlog.deleteBlog(id).subscribe(data=>{
       this.authService.getShareBlogs().subscribe(data=>{

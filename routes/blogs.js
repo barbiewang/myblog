@@ -73,14 +73,12 @@ router.post('/blog-update/:id',(req,res,next)=>{
 router.post('/blog-addlike/:id',(req,res,next)=>{
     let id = req.params.id;
     Blog.addLike(id, (error, result )=> {
-        console.log(result);
         res.json({blog: result})
     })
 })
 router.post('/blog-cancellike/:id',(req,res,next)=>{
     let id = req.params.id;
     Blog.cancelLike(id, (error, result )=> {
-        console.log(result);
         res.json({blog: result})
     })
 })
