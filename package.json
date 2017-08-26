@@ -16,7 +16,8 @@
     "mongoose": "*",
     "passport": "*",
     "passport-jwt": "*",
-    "showdown": "^1.7.2"
+    "showdown": "^1.7.2",
+    "tinymce": "^4.6.5"
   },
   "author": "Jane",
   "license": "ISC"

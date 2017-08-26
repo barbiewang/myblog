@@ -10,10 +10,10 @@
     line-height: 2;
 }
 .carousel-caption{
-    /* bottom:5%; */
     /* left:5%; */
     color:#ED90A1;
     font-size: 1.4em;
+    bottom:20%;
 }
 h4{
     color:#26C1D2;
