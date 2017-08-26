@@ -13,6 +13,12 @@ export class AboutblogService {
     return this.http.delete("http://localhost:3000/blogs/blog-delete/"+id,{headers:headers})
           .map(res=>res.json());
   }
+  deleteComment(id){
+    let headers = new Headers();
+    headers.append("Content-Type","application/json");
+    return this.http.delete("http://localhost:3000/comments/comment-delete/"+id,{headers:headers})
+          .map(res=>res.json());
+  }
   editBlog(id){
     let headers = new Headers();
     headers.append("Content-Type","application/json");

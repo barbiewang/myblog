@@ -1,3 +1,5 @@
+<script src='http://lib.qinco.me/dist/basicShare/0.3.min.js'>
+</script>
 <div id="container"></div>
 <button (click)="Zan()" class="btn btn-success">
   <span *ngIf="!isadded"><img src="./images/heart2.png" alt="空心">&nbsp;点赞</span>
@@ -5,36 +7,40 @@
   <span id="like">&nbsp;</span>
 </button>
 <button (click)="IfLogged()" class="btn btn-primary">留言</button>
-<button (click)="Ifshare()" class="btn btn-default">分享</button>
+<!-- <button  class="btn btn-default basicShareBtn"><a class='basicShareBtn' href='#' >分享</a></button> -->
+<button class="basicShareBtn btn btn-default" data-shareUrl='https://qinco.net/basicshare' data-shareTitle='自定义分享标题：basicShare.js'
+  data-sharePic='http://ohgogko7h.qnssl.com/QINCO/img/lab/basicShare.jpg'><span class='fa fa-share-alt'></span> 分享
+</button>
 <button (click)="goBackToList()" class="btn btn-info">返回文章列表</button>
-<button *ngIf = "authService.adminLoggedIn()" (click)="editBlog(blog._id)"  class="btn btn-success pull-left"><span class="glyphicon glyphicon-edit"></span></button>
-<div *ngIf = "isclicked">
-  <form *ngIf = "authService.adminLoggedIn()" (submit) = "onUpdateSubmit()">
+<button *ngIf="authService.adminLoggedIn()" (click)="editBlog(blog._id)" class="btn btn-success pull-left"><span class="glyphicon glyphicon-edit"></span></button>
+
+<div *ngIf="isclicked">
+  <form *ngIf="authService.adminLoggedIn()" (submit)="onUpdateSubmit()">
     <div class="form-group">
       <label>标题</label>
-      <input type="text" [(ngModel)]= "blog.headline" name="headline" class="form-control" placeholder="headline">
+      <input type="text" [(ngModel)]="blog.headline" name="headline" class="form-control" placeholder="headline">
     </div>
     <div class="form-group">
       <label>作者</label>
-      <input type="text" [(ngModel)]= "blog.author" name="author" class="form-control" placeholder="author">
+      <input type="text" [(ngModel)]="blog.author" name="author" class="form-control" placeholder="author">
       <label>时间</label>
-      <input type="text" [(ngModel)]= "blog.time" name="time" class="form-control" placeholder="time">
+      <input type="text" [(ngModel)]="blog.time" name="time" class="form-control" placeholder="time">
     </div>
     <div class="form-group">
       <label>点赞</label>
-      <input type="number" [(ngModel)]= "blog.like" name="like" class="form-control" placeholder="like">
+      <input type="number" [(ngModel)]="blog.like" name="like" class="form-control" placeholder="like">
     </div>
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">内容</label>
       <div class="col-lg-10">
-        <textarea [(ngModel)]= "blog.content" name="content" class="form-control" rows="3" id="textArea" ></textarea>
+        <textarea [(ngModel)]="blog.content" name="content" class="form-control" rows="3" id="textArea"></textarea>
       </div>
     </div>
     <input type="submit" class="btn btn-success" value="update">
   </form>
 </div>
 <hr>
-<form *ngIf = "isLogged" class="form-horizontal">
+<form *ngIf="isLogged" class="form-horizontal">
   <fieldset>
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">请输入留言</label>
@@ -45,13 +51,19 @@
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <button (click)="closeComment()" type="reset" class="btn btn-default">取消</button>
-        <button (click)="onSubmitComment()" class="btn btn-primary" >提交</button>
+        <button (click)="onSubmitComment()" class="btn btn-primary">提交</button>
       </div>
     </div>
   </fieldset>
 </form>
-<ul *ngIf="comments" class="list-form">
-  <li class="list-form-item" *ngFor="let comment of comments">
-    <p>{{comment.username}}于{{comment.time}}写到：{{comment.text}}</p>
+<div *ngIf="comments" class="well">
+<h4>留言区</h4>
+<ul  class="list-group">
+  <li class="list-group-item" *ngFor="let comment of comments">
+    <p>{{comment.username}}于{{comment.time}}写到：{{comment.text}}
+      <a *ngIf="authService.adminLoggedIn()" (click)="deletecomment(comment._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+      <button (click)="" class="btn btn-default btn-sm">回复</button>
+    </p>
   </li>
 </ul>
+</div>

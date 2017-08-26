@@ -1,117 +1,146 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {Router} from '@angular/router';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 import { ValidateService } from '../../services/validate.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import {AboutblogService} from '../../services/aboutblog.service';
+import { AboutblogService } from '../../services/aboutblog.service';
 
 
 @Component({
   selector: 'app-blog',
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css']
+  templateUrl: './blog.component.html'
 })
 export class BlogComponent implements OnInit {
-  isLogged:boolean = false;
-  isclicked:boolean = false;
-  isadded:boolean = false;
-  text:String;
-  blog:Object;
-  comments:Array<Object>;
+  isLogged: boolean = false;
+  isclicked: boolean = false;
+  isadded: boolean = false;
+  // isshare:boolean = false;
+  text: String;
+  blog: Object;
+  comments: Array<Object>;
 
-  constructor(private authService:AuthService,
-    private flashMessage:FlashMessagesService,
-    private router:Router,
-    private validateService :ValidateService,
-    private aboutBlog:AboutblogService
+
+  constructor(private authService: AuthService,
+    private flashMessage: FlashMessagesService,
+    private router: Router,
+    private validateService: ValidateService,
+    private aboutBlog: AboutblogService,
+    private elementRef: ElementRef
   ) { }
 
   ngOnInit() {
     let blogId = document.location.pathname.split("/").pop()
-    this.authService.getIdBlog(blogId).subscribe(data=>{
-      this.blog = data.blog;  
-      let container = (<HTMLBodyElement> document.getElementById("container"));
-      container.innerHTML+=this.blog["content"];
+    this.authService.getIdBlog(blogId).subscribe(data => {
+      this.blog = data.blog;
+      let container = (<HTMLBodyElement>document.getElementById("container"));
+      container.innerHTML += this.blog["content"];
     })
-    this.authService.getCommentsByBlogId(blogId).subscribe(data=>{
+    this.authService.getCommentsByBlogId(blogId).subscribe(data => {
       this.comments = data.comments;
-     
     })
   }
+  ngAfterViewInit() {
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = "http://lib.qinco.me/dist/basicShare/0.3.min.js";
+    this.elementRef.nativeElement.appendChild(s);
+  }
 
-  getDivId(){
+  getDivId() {
     let divId = document.getElementById('container');
     return divId;
   }
-  goBackToList(){
+  goBackToList() {
     this.router.navigate(['/dashboard']);
   }
-  IfLogged(){
-    if(this.authService.loggedIn()){
+  IfLogged() {
+    if (this.authService.loggedIn()) {
       this.isLogged = !this.isLogged;
-    }else{
+    } else {
       this.isLogged = false;
-      this.flashMessage.show("请登录后留言",{cssClass:'alert-danger',timeout:3000});
+      this.flashMessage.show("请登录后留言", { cssClass: 'alert-danger', timeout: 3000 });
       alert("请登录后留言");
     }
   }
-  closeComment(){
+  closeComment() {
     this.isLogged = false;
   }
-  onSubmitComment(){
+  onSubmitComment() {
     const userString = localStorage.getItem("user");
-    let user=JSON.parse(userString);
-    let content = (<HTMLTextAreaElement> document.getElementById("textArea")).value;
+    let user = JSON.parse(userString);
+    let content = (<HTMLTextAreaElement>document.getElementById("textArea")).value;
     const comment = {
-      text:content,
-      username:user.username,
-      blogid:this.blog["_id"],
-      time:(new Date()).toLocaleString
+      text: content,
+      username: user.username,
+      blogid: this.blog["_id"],
+      time: (new Date()).toLocaleString
     }
-    this.authService.leaveComment(comment).subscribe(data=>{
-      if (data.success){
-        this.flashMessage.show("谢谢留言",{timeout:3000,cssClass:'alert-success'});
+    this.authService.leaveComment(comment).subscribe(data => {
+      if (data.success) {
+        this.flashMessage.show("谢谢留言", { timeout: 3000, cssClass: 'alert-success' });
         this.isLogged = false;
       } else {
-          this.flashMessage.show("评论失败，请重试",{timeout:3000,cssClass:'alert-danger'});
+        this.flashMessage.show("评论失败，请重试", { timeout: 3000, cssClass: 'alert-danger' });
       }
-    
-  })
+    })
+    let blogId = document.location.pathname.split("/").pop();
+    this.authService.getCommentsByBlogId(blogId).subscribe(data => {
+      this.comments = data.comments;
+
+    })
   }
 
-  editBlog(id){
-    this.aboutBlog.editBlog(id).subscribe(data=>{
+  editBlog(id) {
+    this.aboutBlog.editBlog(id).subscribe(data => {
       this.blog = data.blog;
       this.isclicked = !this.isclicked;
 
     })
   }
-  onUpdateSubmit(){
-    this.aboutBlog.updateBlog(this.blog).subscribe(data=>{
+  onUpdateSubmit() {
+    this.aboutBlog.updateBlog(this.blog).subscribe(data => {
       this.blog = data.blog;
     })
   }
-  Zan(){
+  Zan() {
     this.isadded = !this.isadded;
-    let like = (<HTMLBodyElement> document.getElementById("like"));
+    let like = (<HTMLBodyElement>document.getElementById("like"));
     console.log("like", this.isadded);
 
-    if(this.isadded){
-       this.aboutBlog.addLike(this.blog).subscribe(data=>{
-         this.blog = data.blog;
-         console.log("add" , this.blog["like"]);   
-         like.innerText=this.blog["like"];
-       })
+    if (this.isadded) {
+      this.aboutBlog.addLike(this.blog).subscribe(data => {
+        this.blog = data.blog;
+        console.log("add", this.blog["like"]);
+        like.innerText = this.blog["like"];
+      })
     } else {
-      this.aboutBlog.cancelLike(this.blog).subscribe(data=>{
+      this.aboutBlog.cancelLike(this.blog).subscribe(data => {
         this.blog = data.blog;
         console.log("cancel", this.blog["like"]);
-        like.innerText=this.blog["like"];     
+        like.innerText = this.blog["like"];
       })
     }
-    
+
 
   }
+  // Ifshare(){
+  //   this.isshare = !this.isshare;
+  //   // let share = (<HTMLBodyElement> document.getElementsByClassName("social-share")[0]);
+  //   // share.share(this.config);
+  //   (<HTMLBodyElement> document.getElementById("share")).jsSocials(
+  //     {
+  //       shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+  //   });
+  // }
+  deletecomment(id) {
+    let blogId = document.location.pathname.split("/").pop()
+    this.aboutBlog.deleteComment(id).subscribe(data => {
+      this.authService.getCommentsByBlogId(blogId).subscribe(data => {
+        this.comments = data.comments;
+      });
+    })
+  }
+
 
 }
