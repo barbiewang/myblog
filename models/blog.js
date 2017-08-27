@@ -35,11 +35,11 @@ module.exports.addBlog = function(blog,callback){
 
 module.exports.getBlogByAuthor= function(author,callback){
     const query = {author:author};
-    Blog.find(query,callback).sort({time:1});
+    Blog.find(query,callback).sort({time:-1});
 };
 module.exports.getBlogByOtherAuthor= function(author,callback){
     const query = {author:{$ne:author}};
-    Blog.find(query,callback).sort({time:1});
+    Blog.find(query,callback).sort({time:-1});
 };
 module.exports.getBlogById = function(id,callback){
     Blog.findById(id,callback);
