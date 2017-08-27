@@ -15,12 +15,11 @@ export class BlogComponent implements OnInit {
   isLogged: boolean = false;
   isclicked: boolean = false;
   isadded: boolean = false;
-  // isshare:boolean = false;
+  isreplyed:Array<Boolean> = Array<Boolean>();
   text: String;
   blog: Object;
   comments: Array<Object>;
-
-
+  
   constructor(private authService: AuthService,
     private flashMessage: FlashMessagesService,
     private router: Router,
@@ -38,12 +37,13 @@ export class BlogComponent implements OnInit {
     })
     this.authService.getCommentsByBlogId(blogId).subscribe(data => {
       this.comments = data.comments;
+      console.log(this.comments);
     })
   }
   ngAfterViewInit() {
     var s = document.createElement("script");
     s.type = "text/javascript";
-    s.src = "http://lib.qinco.me/dist/basicShare/0.3.min.js";
+    s.src = "../../assets/js/basicShare.min.js";
     this.elementRef.nativeElement.appendChild(s);
   }
 
@@ -74,7 +74,8 @@ export class BlogComponent implements OnInit {
       text: content,
       username: user.username,
       blogid: this.blog["_id"],
-      time: (new Date()).toLocaleString
+      time: (new Date()).toLocaleString,
+
     }
     this.authService.leaveComment(comment).subscribe(data => {
       if (data.success) {
@@ -124,15 +125,6 @@ export class BlogComponent implements OnInit {
 
 
   }
-  // Ifshare(){
-  //   this.isshare = !this.isshare;
-  //   // let share = (<HTMLBodyElement> document.getElementsByClassName("social-share")[0]);
-  //   // share.share(this.config);
-  //   (<HTMLBodyElement> document.getElementById("share")).jsSocials(
-  //     {
-  //       shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
-  //   });
-  // }
   deletecomment(id) {
     let blogId = document.location.pathname.split("/").pop()
     this.aboutBlog.deleteComment(id).subscribe(data => {
@@ -141,6 +133,41 @@ export class BlogComponent implements OnInit {
       });
     })
   }
+  isreply(idx){
+    this.isreplyed[idx] = !this.isreplyed[idx];                              
+  }
+  replyComment(id,rootid,name){
+    this.IfLogged();
+    if (rootid == undefined ) {
+      rootid=id;
+    }
+    const userString = localStorage.getItem("user");
+    let user = JSON.parse(userString);
+    const replycomment = {
+      text:this.text,
+      username:user.username,
+      blogid:this.blog["_id"],
+      replyid:id,
+      rootid:rootid,
+      replyusername:name
+    }
+    this.authService.leaveComment(replycomment).subscribe(data => {
+      if (data.success) {
+        this.flashMessage.show("谢谢留言", { timeout: 3000, cssClass: 'alert-success' });
+        this.isLogged = false;
 
+      } else {
+        this.flashMessage.show("评论失败，请重试", { timeout: 3000, cssClass: 'alert-danger' });
+      }
+    })
+    let blogId = document.location.pathname.split("/").pop();
+    this.authService.getCommentsByBlogId(blogId).subscribe(data => {
+      let cs = <Array<Object>>data.comments;
+      let as = Array<Boolean>(cs.length);
+      this.comments = data.comments;
+      console.log(this.comments);
+      this.isreplyed = as;
+  })
+  }
 
 }

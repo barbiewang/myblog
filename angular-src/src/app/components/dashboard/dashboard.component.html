@@ -1,52 +1,51 @@
- <ul class="nav nav-tabs">
+<ul class="nav nav-tabs">
   <li class="active"><a (click)="onReqShareBlogs()" href="#share" data-toggle="tab" aria-expanded="false">分享</a></li>
   <li><a (click)="onReqOriginBlogs()" href="#origin" data-toggle="tab" aria-expanded="true">原创</a></li>
 </ul>
 
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade active in" id="share">
-    <ol class="list-group" >
+    <ol class="list-group">
       <li class="list-item" *ngFor="let shareblog of shareblogs">
-        <a target ="blank"  href={{shareblog.content}}>{{shareblog.headline}}</a>
+        <a target="blank" href={{shareblog.content}}>{{shareblog.headline}}</a>
         <span>&nbsp;&nbsp;&nbsp;{{shareblog.author}}</span>
         <em>&nbsp;&nbsp;&nbsp;--{{shareblog.time}}</em>
-        <a *ngIf = "authService.adminLoggedIn()" (click)="deleteBlog(shareblog._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
-        <a *ngIf = "authService.adminLoggedIn()" (click)="editBlog(shareblog._id)" class="pull-right"><span class="glyphicon glyphicon-edit"></span></a>
+        <a *ngIf="authService.adminLoggedIn()" (click)="deleteBlog(shareblog._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+        <a *ngIf="authService.adminLoggedIn()" (click)="editBlog(shareblog._id)" class="pull-right"><span class="glyphicon glyphicon-edit"></span></a>
       </li>
     </ol>
   </div>
-  <div class="tab-pane fade" id="origin">
-     <ol class="list-group" >
-      <li class="list-item" *ngFor="let originblog of originblogs;let i = index">
-        <a [routerLink]="['/blog',originblog._id]" >{{originblog.headline}}</a>
+  <div class="tab-pane" id="origin">
+    <ol class="list-group">
+      <li class="list-item" *ngFor="let originblog of originblogs">
+        <a [routerLink]="['/blog',originblog._id]">{{originblog.headline}}</a>
         <em>&nbsp;&nbsp;&nbsp;--{{originblog.time}}</em>
-        <a *ngIf = "authService.adminLoggedIn()" (click)="deleteBlog(originblog._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
-        <a *ngIf = "authService.adminLoggedIn()" (click)="editBlog(originblog._id)" class="pull-right"><span class="glyphicon glyphicon-edit"></span></a>
+        <a *ngIf="authService.adminLoggedIn()" (click)="deleteBlog(originblog._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+        <a *ngIf="authService.adminLoggedIn()" (click)="editBlog(originblog._id)" class="pull-right"><span class="glyphicon glyphicon-edit"></span></a>
       </li>
     </ol>
-    
   </div>
   <div *ngIf=isEdit>
-      <form *ngIf = "authService.adminLoggedIn()" (submit) = "onUpdateSubmit()">
-          <div class="form-group">
-            <label>标题</label>
-            <input type="text" [(ngModel)]= "blog.headline" name="headline" class="form-control" placeholder="headline">
-          </div>
-          <div class="form-group">
-            <label>作者</label>
-            <input type="text" [(ngModel)]= "blog.author" name="author" class="form-control" placeholder="author">
-            <label>时间</label>
-            <input type="text" [(ngModel)]= "blog.time" name="time" class="form-control" placeholder="time">
-            <label>点赞</label>
-            <input type="text" [(ngModel)]= "blog.like" name="like" class="form-control" placeholder="like">
-          </div>
-          <div class="form-group">
-            <label for="textArea" class="col-lg-2 control-label">内容</label>
-            <div class="col-lg-10">
-              <textarea [(ngModel)]= "blog.content" name="content" class="form-control" rows="3" id="textArea" ></textarea>
-            </div>
-          </div>
-          <input type="submit" class="btn btn-success" value="update">
-        </form>
+    <form *ngIf="authService.adminLoggedIn()" (submit)="onUpdateSubmit()">
+      <div class="form-group">
+        <label>标题</label>
+        <input type="text" [(ngModel)]="blog.headline" name="headline" class="form-control" placeholder="headline">
       </div>
+      <div class="form-group">
+        <label>作者</label>
+        <input type="text" [(ngModel)]="blog.author" name="author" class="form-control" placeholder="author">
+        <label>时间</label>
+        <input type="text" [(ngModel)]="blog.time" name="time" class="form-control" placeholder="time">
+        <label>点赞</label>
+        <input type="text" [(ngModel)]="blog.like" name="like" class="form-control" placeholder="like">
+      </div>
+      <div class="form-group">
+        <label for="textArea" class="col-lg-2 control-label">内容</label>
+        <div class="col-lg-10">
+          <textarea [(ngModel)]="blog.content" name="content" class="form-control" rows="3" id="textArea"></textarea>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-success" value="update">
+    </form>
+  </div>
 </div>

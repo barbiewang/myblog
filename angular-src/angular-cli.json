@@ -27,6 +27,8 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+        // "src/assets/js/popper.min.js",
+        // "src/assets/js/bootstrap-4.0.0.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

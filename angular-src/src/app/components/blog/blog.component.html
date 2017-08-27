@@ -1,9 +1,10 @@
 <script src='http://lib.qinco.me/dist/basicShare/0.3.min.js'>
+
 </script>
 <div id="container"></div>
 <button (click)="Zan()" class="btn btn-success">
-  <span *ngIf="!isadded"><img src="./images/heart2.png" alt="空心">&nbsp;点赞</span>
-  <span *ngIf="isadded"><img src="./images/heart3.png" alt="空心">&nbsp;取消</span>
+  <span *ngIf="!isadded"><img src="../../assets/images/heart2.png" alt="空心">&nbsp;点赞</span>
+  <span *ngIf="isadded"><img src="../../assets/images/heart3.png" alt="空心">&nbsp;取消</span>
   <span id="like">&nbsp;</span>
 </button>
 <button (click)="IfLogged()" class="btn btn-primary">留言</button>
@@ -57,13 +58,27 @@
   </fieldset>
 </form>
 <div *ngIf="comments" class="well">
-<h4>留言区</h4>
-<ul  class="list-group">
-  <li class="list-group-item" *ngFor="let comment of comments">
-    <p>{{comment.username}}于{{comment.time}}写到：{{comment.text}}
-      <a *ngIf="authService.adminLoggedIn()" (click)="deletecomment(comment._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
-      <button (click)="" class="btn btn-default btn-sm">回复</button>
-    </p>
-  </li>
-</ul>
+  <h4>留言区</h4>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let commentGroup of comments;let i= index">
+      <ol class="list-group">
+        <li class="list-group-item" id={{i}}>
+          {{commentGroup[0].username}}于{{commentGroup[0].time}}回复：{{commentGroup[0].text}}
+          <a *ngIf="authService.adminLoggedIn()" (click)="deletecomment(comment._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+          <button (click)="isreply(i)" class="btn btn-default btn-sm">回复</button>
+          <ol>
+            <li *ngFor="let comment of commentGroup let j=index">
+              <span>{{comment.username}}于{{comment.time}}回复{{comment.replyusername}}：{{comment.text}}</span>
+              <a *ngIf="authService.adminLoggedIn()" (click)="deletecomment(comment._id)" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+              <button (click)="isreply(i)" class="btn btn-default btn-sm">回复</button>
+            </li>
+          </ol>
+        </li>
+      </ol>
+      <form *ngIf="isreplyed.length >=i && isreplyed[i]" class="form-horizontal" (submit)="replyComment(commentGroup[i]._id,commentGroup[i].rootid,commentGroup[i].username)">
+        <input type="text" class="form-control" [(ngModel)]="text" name="text">
+        <input type="submit" class="btn btn-default btn-sm" value="提交">
+      </form>
+    </li>
+  </ul>
 </div>

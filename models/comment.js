@@ -22,6 +22,12 @@ const CommentSchema = mongoose.Schema({
     },
     replyid:{
         type:String
+    },
+    rootid:{
+        type:String,
+    },
+    replyusername:{
+        type:String
     }
 })
 
@@ -33,7 +39,7 @@ module.exports.addComment = function(comment,callback){
 
 module.exports.getCommentByBlogId = function(blogid,callback){
     const query = {blogid:blogid};
-    Comment.find(query,callback).sort({time:-1});
+    Comment.find(query,callback).sort({time:1});
 };
 module.exports.getCommentById = function(id,callback){
     Comment.find(id,callback);

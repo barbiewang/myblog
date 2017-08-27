@@ -28,9 +28,12 @@ router.post('/post-blog',(req,res,next)=>{
 })
 
 router.get('/blog-author',(req,res,next)=>{
+    
     let author = req.query.author;
+    console.log(author);
     Blog.getBlogByAuthor(author, (error, result )=> {
         res.json({blogs: result});
+        console.log(result);
     })
     
 })
