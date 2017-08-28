@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http,Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -13,32 +14,32 @@ export class AuthService {
   registerUser(user){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.post("http://localhost:3000/users/register",user,{headers:headers})
+    return this.http.post(environment.api_base_url + "/users/register",user,{headers:headers})
           .map(res=>res.json());
   }
   validateUsername(user){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.post("http://localhost:3000/users/validate-username",{username:user.username},{headers:headers})
+    return this.http.post(environment.api_base_url + "/users/validate-username",{username:user.username},{headers:headers})
           .map(res=>res.json());
   }
   
   updateUser(user){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.post("http://localhost:3000/users/update",user,{headers:headers})
+    return this.http.post(environment.api_base_url+"/users/update",user,{headers:headers})
           .map(res=>res.json());
   }
   changePassword(user){
      let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.post("http://localhost:3000/users/password",user,{headers:headers})
+    return this.http.post(environment.api_base_url+"/users/password",user,{headers:headers})
           .map(res=>res.json());
   }
   authenticateUser(user){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.post("http://localhost:3000/users/authenticate",user,{headers:headers})
+    return this.http.post(environment.api_base_url+"/users/authenticate",user,{headers:headers})
           .map(res=>res.json());
   }
   getProfile(){
@@ -46,13 +47,13 @@ export class AuthService {
      this.loadToken();
     headers.append("Authorization",this.authToken);
     headers.append("Content-Type","application/json");
-    return this.http.get("http://localhost:3000/users/profile",{headers:headers})
+    return this.http.get(environment.api_base_url+"/users/profile",{headers:headers})
           .map(res=>res.json());
   }
   postBlog(blog){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.post("http://localhost:3000/blogs/post-blog",blog,{headers:headers})
+    return this.http.post(environment.api_base_url+"/blogs/post-blog",blog,{headers:headers})
           .map(res=>res.json());
   }
   storeUserData(token,user){
@@ -91,31 +92,31 @@ export class AuthService {
   getOriginBlogs(){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.get("http://localhost:3000/blogs/blog-author?author=Jane",{headers:headers})
+    return this.http.get(environment.api_base_url+"/blogs/blog-author?author=Jane",{headers:headers})
           .map(res=>res.json());
   }
   getShareBlogs(){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.get("http://localhost:3000/blogs/blog-author-notjane?author=Jane",{headers:headers})
+    return this.http.get(environment.api_base_url+"/blogs/blog-author-notjane?author=Jane",{headers:headers})
           .map(res=>res.json());
   }
   getIdBlog(id){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.get("http://localhost:3000/blogs/blog/"+id,{headers:headers})
+    return this.http.get(environment.api_base_url+"/blogs/blog/"+id,{headers:headers})
           .map(res=>res.json());
   }
   leaveComment(comment){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.post("http://localhost:3000/comments/comment",comment,{headers:headers})
+    return this.http.post(environment.api_base_url+"/comments/comment",comment,{headers:headers})
           .map(res=>res.json());
   }
   getCommentsByBlogId(id){
     let headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.http.get("http://localhost:3000/comments/comment/"+id,{headers:headers})
+    return this.http.get(environment.api_base_url+"/comments/comment/"+id,{headers:headers})
           .map(res=>res.json());
   }
   
