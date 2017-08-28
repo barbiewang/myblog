@@ -6,6 +6,8 @@ import { RouterModule,Routes } from '@angular/router';
 import {AuthGuard} from './guards/auth.guard';
 import {AuthGuard2} from './guards/auth2.guard';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+//see: https://github.com/surmon-china/ngx-quill-editor
+import {QuillEditorModule} from 'ngx-quill-editor';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -21,7 +23,6 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 import {AuthService} from './services/auth.service';
 import {AboutblogService} from './services/aboutblog.service';
 import { BlogComponent } from './components/blog/blog.component';
-
 
 const appRoutes:Routes = [
   {path:"",component:HomeComponent},
@@ -51,7 +52,8 @@ declare var tinymce: any;
     HttpModule,
     RouterModule.forRoot(appRoutes),
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
-    FlashMessagesModule
+    FlashMessagesModule,
+    QuillEditorModule
   ],
   providers: [ValidateService,AuthService,AboutblogService,AuthGuard,AuthGuard2],
   bootstrap: [AppComponent]

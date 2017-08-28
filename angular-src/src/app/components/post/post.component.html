@@ -1,13 +1,14 @@
 <h2 class="page-header">Blog</h2>
-<form (submit) = "onPostSubmit()">
+<form (submit)="onPostSubmit()">
   <div class="form-group">
     <label>标题</label>
-    <input type="text" [(ngModel)]= "headline" name="headline" class="form-control" placeholder="headline">
+    <input type="text" [(ngModel)]="headline" name="headline" class="form-control" placeholder="headline">
     <label>作者</label>
-    <input type="text" [(ngModel)]= "author" name="author" class="form-control" placeholder="author">
+    <input type="text" [(ngModel)]="author" name="author" class="form-control" placeholder="author">
   </div>
-  <textarea [froalaEditor] [(ngModel)]= "content"  name="content"></textarea>
+  <quill-editor [(ngModel)]="content" name="content" [options]="editorOptions" (blur)="onEditorBlured($event)" (focus)="onEditorFocused($event)"
+    (ready)="onEditorCreated($event)" (change)="onContentChanged($event)"></quill-editor>
+
   <hr>
   <input type="submit" class="btn btn-primary" value="提交">
 </form>
-  

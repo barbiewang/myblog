@@ -10,34 +10,34 @@ router.get('/comment/:id', (req, res, next) => {
     Comment.getCommentByBlogId(id, (error, result) => {
         console.log(result);
         let comments = [];
-        let kv = {};
-        for (var i = 0; i < result.length; i++) {
-            let comment = result[i];
-            if (comment.rootid == undefined) {
-                let commentGroup = [];
-                kv[comment._id] = commentGroup;
-                comments.push(commentGroup);
-                commentGroup.push(comment);
-            } else {
-                let commentGroup = kv[comment.rootid];
-                commentGroup.push(comment);
-            }
-        }
-        // for (var i = 0; i < result.length; i ++) {
-        //     let rootComment = result[i];
-        //     if (rootComment.rootid == undefined) {
+        // let kv = {};
+        // for (var i = 0; i < result.length; i++) {
+        //     let comment = result[i];
+        //     if (comment.rootid == undefined) {
         //         let commentGroup = [];
-        //         commentGroup.push(rootComment);
-        //         for (var j = 0; j < result.length; j ++) {
-        //             let comment = result[j];
-        //             console.log("rootid", comment.rootid, " id" , rootComment._id);
-        //             if (comment.rootid == rootComment._id) {
-        //                 commentGroup.push(comment);
-        //             }
-        //         }
+        //         kv[comment._id] = commentGroup;
         //         comments.push(commentGroup);
+        //         commentGroup.push(comment);
+        //     } else {
+        //         let commentGroup = kv[comment.rootid];
+        //         commentGroup.push(comment);
         //     }
         // }
+        for (var i = 0; i < result.length; i ++) {
+            let rootComment = result[i];
+            if (rootComment.rootid == undefined) {
+                let commentGroup = [];
+                commentGroup.push(rootComment);
+                for (var j = 0; j < result.length; j ++) {
+                    let comment = result[j];
+                    console.log("rootid", comment.rootid, " id" , rootComment._id);
+                    if (comment.rootid == rootComment._id) {
+                        commentGroup.push(comment);
+                    }
+                }
+                comments.push(commentGroup);
+            }
+        }
         console.log("DEBUG");
         console.log(comments);
         // for(let i = 0;i<)

@@ -14,6 +14,11 @@ export class PostComponent implements OnInit {
   author:String;
   time:String;
   content:String;
+  public editor;
+  public editorContent = `<h3>I am Example content</h3>`;
+  public editorOptions = {
+    placeholder: "insert content..."
+  };
 
   constructor(private validateService :ValidateService,
           private flashMessage:FlashMessagesService,
@@ -24,6 +29,25 @@ export class PostComponent implements OnInit {
   ngOnInit() {
   }
   
+
+
+  onEditorBlured(quill) {
+    console.log('editor blur!', quill);
+  }
+
+  onEditorFocused(quill) {
+    console.log('editor focus!', quill);
+  }
+
+  onEditorCreated(quill) {
+    this.editor = quill;
+    console.log('quill is ready! this is current quill instance object', quill);
+  }
+
+  onContentChanged({ quill, html, text }) {
+    
+  }
+
   onPostSubmit(){
     const blog = {
       headline:this.headline,
