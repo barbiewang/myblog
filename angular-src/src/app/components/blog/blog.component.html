@@ -8,9 +8,7 @@
   <span id="like">&nbsp;</span>
 </button>
 <button (click)="IfLogged()" class="btn btn-primary">留言</button>
-<!-- <button  class="btn btn-default basicShareBtn"><a class='basicShareBtn' href='#' >分享</a></button> -->
-<button class="basicShareBtn btn btn-default" data-shareUrl='https://qinco.net/basicshare' data-shareTitle='自定义分享标题：basicShare.js'
-  data-sharePic='http://ohgogko7h.qnssl.com/QINCO/img/lab/basicShare.jpg'><span class='fa fa-share-alt'></span> 分享
+<button id ="share-btn" class="basicShareBtn btn btn-default" data-sharePic='http://ohgogko7h.qnssl.com/QINCO/img/lab/basicShare.jpg'><span class='fa fa-share-alt'></span> 分享
 </button>
 <button (click)="goBackToList()" class="btn btn-info">返回文章列表</button>
 <button *ngIf="authService.adminLoggedIn()" (click)="editBlog(blog._id)" class="btn btn-success pull-left"><span class="glyphicon glyphicon-edit"></span></button>

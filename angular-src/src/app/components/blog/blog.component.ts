@@ -5,7 +5,7 @@ import { ValidateService } from '../../services/validate.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { AboutblogService } from '../../services/aboutblog.service';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-blog',
@@ -19,6 +19,7 @@ export class BlogComponent implements OnInit {
   text: String;
   blog: Object;
   comments: Array<Object>;
+  baseurl : String;
   
   constructor(private authService: AuthService,
     private flashMessage: FlashMessagesService,
@@ -29,12 +30,18 @@ export class BlogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.baseurl = environment.api_base_url;
     let blogId = document.location.pathname.split("/").pop()
     this.authService.getIdBlog(blogId).subscribe(data => {
       this.blog = data.blog;
       let container = (<HTMLBodyElement>document.getElementById("container"));
       container.innerHTML += this.blog["content"];
+
+      let shareBtn = (<HTMLButtonElement>document.getElementById("share-btn"));
+      shareBtn.setAttribute("data-shareUrl", this.baseurl + "/blog/" + this.blog["_id"]);
+      shareBtn.setAttribute("data-shareTitle", this.blog["headline"]);
     })
+
     this.authService.getCommentsByBlogId(blogId).subscribe(data => {
       this.comments = data.comments;
       console.log(this.comments);
