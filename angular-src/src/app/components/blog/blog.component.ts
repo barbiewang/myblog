@@ -36,10 +36,6 @@ export class BlogComponent implements OnInit {
       this.blog = data.blog;
       let container = (<HTMLBodyElement>document.getElementById("container"));
       container.innerHTML += this.blog["content"];
-
-      let shareBtn = (<HTMLButtonElement>document.getElementById("share-btn"));
-      shareBtn.setAttribute("data-shareUrl", this.baseurl + "/blog/" + this.blog["_id"]);
-      shareBtn.setAttribute("data-shareTitle", this.blog["headline"]);
     })
 
     this.authService.getCommentsByBlogId(blogId).subscribe(data => {

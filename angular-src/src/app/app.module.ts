@@ -5,9 +5,6 @@ import { HttpModule } from '@angular/http';
 import { RouterModule,Routes } from '@angular/router';
 import {AuthGuard} from './guards/auth.guard';
 import {AuthGuard2} from './guards/auth2.guard';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-//see: https://github.com/surmon-china/ngx-quill-editor
-import {QuillEditorModule} from 'ngx-quill-editor';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -51,9 +48,7 @@ declare var tinymce: any;
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
-    FlashMessagesModule,
-    QuillEditorModule
+    FlashMessagesModule
   ],
   providers: [ValidateService,AuthService,AboutblogService,AuthGuard,AuthGuard2],
   bootstrap: [AppComponent]

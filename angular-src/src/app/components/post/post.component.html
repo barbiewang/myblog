@@ -6,8 +6,10 @@
     <label>作者</label>
     <input type="text" [(ngModel)]="author" name="author" class="form-control" placeholder="author">
   </div>
-  <quill-editor [(ngModel)]="content" name="content" [options]="editorOptions" (blur)="onEditorBlured($event)" (focus)="onEditorFocused($event)"
-    (ready)="onEditorCreated($event)" (change)="onContentChanged($event)"></quill-editor>
+  <div>
+    <p>内容</p>
+  <textarea [(ngModel)] = "content" name="content" class="form-control"></textarea>
+  </div>
 
   <hr>
   <input type="submit" class="btn btn-primary" value="提交">

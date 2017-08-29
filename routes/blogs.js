@@ -14,7 +14,7 @@ router.post('/post-blog',(req,res,next)=>{
         content:req.body.content,
         author:req.body.author,
         time:req.body.time,
-        like:1
+        like:0
     });
     Blog.addBlog(newBlog,(err,blog)=>{
         if(err){

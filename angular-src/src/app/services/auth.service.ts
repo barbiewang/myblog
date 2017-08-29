@@ -51,6 +51,7 @@ export class AuthService {
           .map(res=>res.json());
   }
   postBlog(blog){
+    console.log("blog"+blog);
     let headers = new Headers();
     headers.append("Content-Type","application/json");
     return this.http.post(environment.api_base_url+"/blogs/post-blog",blog,{headers:headers})
