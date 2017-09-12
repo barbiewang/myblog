@@ -13,7 +13,7 @@ router.post('/post-blog',(req,res,next)=>{
         headline : req.body.headline,
         content:req.body.content,
         author:req.body.author,
-        time:req.body.time,
+        time:(new Date()).toLocaleString(),
         like:0
     });
     Blog.addBlog(newBlog,(err,blog)=>{
